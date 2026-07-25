@@ -71,7 +71,7 @@ export default async function StudioPage() {
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <Reveal>
               <div className="overflow-hidden rounded-2xl bg-shell">
-                <img src={px(8134754)} alt={pick({ en: "A calm, detailed interior by Arm Studio", zh: "Arm Studio 沉穩細緻的室內空間" }, locale)} loading="lazy" className="aspect-[4/5] w-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1400&h=1000&q=80" alt={pick({ en: "A calm, detailed interior by Arm Studio", zh: "Arm Studio 沉穩細緻的室內空間" }, locale)} loading="lazy" className="aspect-[4/5] w-full object-cover" />
               </div>
             </Reveal>
             <Reveal delay={120}>
