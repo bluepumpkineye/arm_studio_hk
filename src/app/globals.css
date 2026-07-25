@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+/* ============================================================
+   ARM STUDIO — Editorial warm-luxury design system
+   Fraunces (display serif) · Manrope (body)
+   ============================================================ */
+
+@theme {
+  --color-bone: #f4efe4;
+  --color-paper: #ebe2d1;
+  --color-shell: #e4d9c4;
+  --color-ink: #17120a;
+  --color-espresso: #20190f;
+  --color-coffee: #2c2417;
+  --color-taupe: #6a6051;
+  --color-mist: #a99d87;
+  --color-sand: #c8b48d;
+  --color-brass: #a9743a;
+  --color-brass-soft: #c4915a;
+  --color-clay: #8a4f33;
+  --color-line: rgba(23, 18, 10, 0.14);
+  --color-line-light: rgba(244, 239, 228, 0.16);
+
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  :root {
+    --header-h: 76px;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  body {
+    background-color: var(--color-bone);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01";
+    overflow-x: hidden;
+  }
+
+  /* Film-grain overlay for an editorial, printed-paper feel */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    pointer-events: none;
+    opacity: 0.04;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bone);
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 11px;
+    height: 11px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-paper);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-taupe);
+    border: 3px solid var(--color-paper);
+    border-radius: 999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-brass);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .font-display { font-family: var(--font-display); }
+  .font-sans { font-family: var(--font-sans); }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .display-italic {
+    font-style: italic;
+    font-variation-settings: "opsz" 144, "SOFT" 80;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 1s var(--ease-out-quint),
+      transform 1s var(--ease-out-quint);
+    will-change: opacity, transform;
+  }
+  .reveal.reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Animated underline link */
+  .ulink {
+    position: relative;
+    display: inline-block;
+  }
+  .ulink::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s var(--ease-out-quint);
+  }
+  .ulink:hover::after,
+  .ulink[data-active="true"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .marquee {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: marquee 38s linear infinite;
+  }
+  .marquee-wrap:hover .marquee {
+    animation-play-state: paused;
+  }
+
+  .btn-press {
+    transition: transform 0.4s var(--ease-out-quint);
+  }
+  .btn-press:active {
+    transform: scale(0.97);
+  }
+
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .drag-none {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  .grain-mask {
+    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+    mask-image: linear-gradient(180deg, #000 60%, transparent);
+  }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+.step-in {
+  animation: stepIn 0.5s var(--ease-out-quint) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .step-in { animation: none !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .marquee { animation: none !important; }
+}
