@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import localFont from "next/font/local";
+import { Fraunces, Manrope } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
@@ -8,20 +8,15 @@ import { Analytics } from "@/components/analytics";
 import { site } from "@/lib/site";
 import { getLocale } from "@/lib/i18n-server";
 
-// Self-hosted fonts (woff2 bundled in the repo) so the build has NO network
-// dependency. next/font/google downloads at build time, which hangs/fails the
-// platform's preview restore when the network is restricted.
-const fraunces = localFont({
-  src: [
-    { path: "../fonts/fraunces-normal.woff2", style: "normal", weight: "300 700" },
-    { path: "../fonts/fraunces-italic.woff2", style: "italic", weight: "300 700" },
-  ],
+const fraunces = Fraunces({
+  subsets: ["latin"],
   variable: "--font-fraunces",
   display: "swap",
+  style: ["normal", "italic"],
 });
 
-const manrope = localFont({
-  src: [{ path: "../fonts/manrope.woff2", style: "normal", weight: "200 800" }],
+const manrope = Manrope({
+  subsets: ["latin"],
   variable: "--font-manrope",
   display: "swap",
 });
